@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const { ErrorHandlingService } = require('./services');
 const handleError = require('./middleware/handleError');
 const morgan = require('morgan');
+
+const { ErrorHandlingService } = require('./services');
+const { AppError, AppErrorTypes } = require('./utils');
 
 const app = express();
 
@@ -11,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*' }))
 app.use(morgan('dev'))
 
-app.use('/api/v1/tasks', require('./routes/tasks.routes'))
+app.use('/api/v1/notes', require('./routes/notes.routes'))
 
 process.on('unhandledRejection', (err) => {
     ErrorHandlingService.handleError(err)
@@ -21,5 +23,6 @@ process.on('unhandledRejection', (err) => {
 })
 
 app.use(handleError);
+app.use((req, res) => AppError.sendErrorResponse(res, AppErrorTypes.NotFound))
 
 module.exports = app;
