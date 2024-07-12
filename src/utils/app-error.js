@@ -24,8 +24,8 @@ class AppError extends Error {
     }
 
     static sendErrorResponse(res, error) {
-        const { name, statusCode, message } = error;
-        return res.status(statusCode).json({ status: name, message });
+        const { name, statusCode, description } = error;
+        return res.status(statusCode).json({ status: name, description });
     }
 
     static passErrorToNext(type, next) {
