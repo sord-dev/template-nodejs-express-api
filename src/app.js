@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*' }))
 app.use(morgan('dev'))
 
-app.use('/api/v1/notes', require('./routes/notes.routes'))
+app.use('/api/v1/notes', require('./routes/tasks.routes'))
 
 process.on('unhandledRejection', (err) => {
     ErrorHandlingService.handleError(err)
